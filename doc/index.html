@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org">
+<title>dtcltiny Handbook</title>
+</head>
+<body>
+<table summary="decoration" width="100%">
+<tr>
+<td height="12" bgcolor="#3399CC">
+<h1>dtcltiny</h1>
+</td>
+</tr>
+</table>
+
+<h2>Introduction</h2>
+<p>dtcltiny is a program to control model train locomotives equiped with
+a digital decoder. For every single locomotive dtcltiny provides a
+separate controller interface to operate speed, driving direction and
+functions (e.g. light, sound, ...).
+Additionally programming of decoders according to NMRA-DCC standard and
+Uhlenbrock is possible. Further features are provided, which are
+described in detail in separate chapters of this handbook.</p>
+
+<h2>Software requirements</h2>
+<p>Besides a running Linux system installation featuring a graphical
+desktop and Qt libraries (version 4 or 5) you need a SRCP server to
+connect dtcltiny, acting as a SRCP client, to your model railway layout.
+The SRCP server must at least support SRCP protocol version 0.8.0, for
+automation mode support for SRCP 0.8.4 is necessary. SRCP means
+"Simple Railroad Command Protocol" and defines a command protocol
+to control digital model railways. For more information please refer to
+<a href="http://www.der-moba.de/index.php/Digitalprojekt">Der Moba</a>.
+In most cases the well known "srcpd" system daemon
+(<a href="http://srcpd.sourceforge.net/">http://srcpd.sourceforge.net/</a>)
+will be used to take over the task acting as a software based central
+control unit. Hint: It is not necessary to setup a SRCP server if you
+only like to run dtcltiny for testing purposes.</p>
+
+<h2>Hardware requirements</h2>
+Hardware requirements depend on your server setup respectively on its
+connection to your model railway layout. The SRCP protocol is designed
+to run over a TCP/IP network so SRCP clients and SRCP server may run on
+different hosts.
+<div>
+<p><img src="main-tiny.png" alt="Ansicht Hauptfenster"></p>
+<p><b>Figure 1:</b> Mainwindow with locomotive controllers and routes
+windows</p>
+</div>
+
+<h2>Installation</h2>
+<h3>rpm</h3>
+<p>Install the package as root using this command:
+<blockquote>
+    <tt><font color="#339900">rpm -i &lt;filename.rpm&gt;</font></p></tt>
+</blockquote>
+
+<h3>source-rpm</h3>
+<p>Built a new binary rpm package as root running the command
+<blockquote>
+    <tt><font color="#339900">rpm --rebuild &lt;filename.src.rpm&gt;</font></tt>
+</blockquote>
+The freshly built rpm package now ready for installation can be found
+in directory
+<tt>/usr/src/redhat/RPMS/i386</tt>
+(other rpm based Linux distributions should use a similar directory
+layout, SuSE:
+<tt>/usr/src/packages/RPMS/i586</tt>, Mandrake:
+<tt>/usr/src/RPM/RPMS/i586</tt>). Install this package as described above.</p>
+
+<h3>Sourcecode (.tar.gz/.tar.bz2)</h3>
+<p>Reveal tar archive by command
+<blockquote>
+<tt><font color="#339900">tar xzf dtcltiny-0.4.4.tar.gz</font></tt>
+</blockquote>
+ The sourcecode can be found in
+subdirectory <i>dtcltiny-0.4.4</i>. Change into this directory and
+compile code with
+<blockquote>
+    <tt><font color="#339900">./configure &amp;&amp; make</font></tt>
+</blockquote>
+After the successfull compile run, install dtcltiny as root with
+<blockquote>
+    <tt><font color="#339900">make install</font></tt>
+</blockquote>
+</p>
+
+<h2>Program start</h2>
+<p>In normal operation mode the SRCP server should be started first.
+About how to do this please refer to the server documentation. For
+testing purposes this step can be skipped.</p>
+<p>dtcltiny can be startet using your desktop menu (category "Games"),
+or right away from a terminal window:</p>
+<blockquote>
+    <tt><font color="#339900">dtcltiny [&lt;filename.dtcl&gt;]</font></tt>
+</blockquote>
+<p>Example:</p>
+<blockquote>
+    <tt><font color="#339900">dtcltiny locos.dtcl</font></tt>
+</blockquote>
+<p><strong>filename.dtcl</strong> This optional parameter points to an
+existing configuation file where dtcltiny can find an already configured
+controller setup. These files typically have the file extension ".dtcl".</p>
+<p>On startup dtcltiny also reads a user preferences file where several
+settings are stored. These settings can be adjusted to your personal
+needs using the menu "Options/Settings". The data itself is stored to
+file <tt>~/.dtcltiny</tt> and is used for the next program
+session start.</p>
+
+<p>After program lauch you will find a more or less empty program
+window, if no pre-configuration was loaded, or a window exposing
+several controllers. The user preferences section enables you to
+automatically load a specified configuration file on program startup.</p>
+
+<h2>Operation</h2>
+
+<h3>Adding and changing controllers</h3>
+<p>To add a new controller choose menu "Controller -&gt; Add". The new
+controller gui appears and can be configured using the context menu
+(right klick on controller). Activate context menu item "Settings" to
+open a dialog window offering several options. These options are
+organized in three different tabs.</p>
+
+<h4>General</h4>
+<div>
+<p><img src="locodialog1.png" alt= "Controller configuration, tab 1"></p>
+<p><b>Figure 2:</b> Controller settings tab &raquo;General&laquo;</p>
+</div>
+
+<p>This tab can be used to configure general controller properties.</p>
+
+<p>Input lines for locomotive name or alias are only informative, their
+purpose is to ease controller identification. The alias can be used to
+represent a train number like in time tables. One of both titles is
+shown on a controller label. A small image can also be assigned to
+visually link this controller to a locomotive model. This locomotive
+image must be availabel as xpm-file.</p>
+
+<p>The checkbox &raquo;Reverse Logic&laquo; helps to adjust the drive
+direction of
+the model. Checking or unchecking just changes the default direction.</p>
+
+<p>Group box "Logik" at the bottom of this window provides options for
+decoder parameters. Please first select the required decoder; if your
+model is not listed select a generic one, depending on your digital
+protocol (NMRA DCC, Motorola).
+Now select the protocol, there may be one ore more offered by the
+selection box. Right of these selection boxes a short text gives some
+hints about protocol properties. At least enter your decoder
+address.</p>
+
+<h4>Functions</h4>
+<div>
+<p><img src="locodialog2.png" alt= "Controller configuration, tab 2"></p>
+<p><b>Figure 3:</b> Properties dialog tab &raquo;Functions&laquo;</p>
+</div>
+
+<p>Depending on the capabilities of the selected decoder this page shows
+a different number of up to 28 functions, organized in rows.
+Whether all functions can actually be used also depends on the used
+decoder; please refer to the decoder manual for details.
+Option "Visible" controlls if the respective function gets a button on
+the controller GUI or not. Due to limited space only up to six function
+buttons can be placed on the controller GUI front. Up to twelve
+functions can be activated by function keys of a common keyboard.</p>
+<p>In the next row the function effect can be selected. The last column
+provides an option to select whether the button behaves as a switch or
+as a pushbutton. Especially the later may be prefered for whistle sound
+or decoupling.</p>
+
+<h4>Speed</h4>
+<div>
+<p><img src="locodialog3.png" alt= "Controller configuration, tab 3"></p>
+<p><b>Figure 4:</b> Properties dialog tab "Speed"</p>
+</div>
+
+<p>Short settings description in tab &raquo;Speed&laquo;:</p>
+<dl>
+    <dt>Maximum</dt>
+    <dd> Die h&ouml;chste Fahrstufe, die vom Controller eingestellt
+    werden kann. Sie bewirkt eine Begrenzung der H&ouml;chstgeschwindigkeit.
+    Den Wert hier nicht auf maximal zu stellen, ist nur sinnvoll bei
+    Decodern, die keine einstellbare H&ouml;chstgeschwindigkeit haben.</dd>
+
+    <dt>Average</dt>
+    <dd>Eine beliebige mittlere Geschwindigkeit, die durch
+    Dr&uuml;cken des gelben Streifens neben dem Geschwindigkeitsregler
+    eingestellt wird.</dd>
+    
+    <dt>Minimum</dt>
+    <dd>Wie Durchschnitt, nur geringere Geschwindigkeit, aktivierbar durch
+    den gr&uuml;nen Streifen.</dd>
+    
+    <dt>Maximum speed</dt>
+    <dd>Oben kann noch die Vorbild-H&ouml;chstgeschwindigkeit
+    eingestellt werden. Dies dient zur Anzeige der
+    momentanen Vorbild-Geschwindigkeit im Controller-Fenster.</dd>
+    
+    <dt>Acceleration<dt>
+    <dd>Die Wartezeit in Millisekunden zwischen einzelnen Fahrstufen beim
+    Beschleunigen. Alle Fahrstufen bis zur Endgeschwindigkeit werden
+    durchlaufen. Bei Decodern mit 128 Fahrstufen sollte man auf jeden
+    Fall einen geringeren Wert einstellen, als es der Voreinstellung
+    entspricht. Wenn der Decoder eine einstellbare Beschleunigung
+    bietet, sollte man hier null einstellen.</dd>
+    
+    <dt>Breaking</dt>
+    <dd>Same as described for acceleration is applicable for breaking.</dd>
+</dl>
+
+<p>Hint: Die Software-Verz&ouml;gerung beim Beschleunigen
+Bremsen tritt nur in Kraft, wenn man die Fahrgeschwindigkeit mit
+einem Klick auf den gr&uuml;nen, gelben oder roten Balken, sowie
+das Bremssymbol w&auml;hlt. Der Schieberegler folgt dabei der
+momentanen Geschwindigkeit. Wird w&auml;hrend einer solchen Phase
+am Schieberegler gezogen, bricht der Beschleuigungs-/Bremsvorgang
+ab. Wird dieselbe Lok noch von einem anderen Regler (z.B. von einem
+Clubkollegen) gesteuert, unterbricht dessen Einflu&szlig;nahme auf
+die Lokgeschwindkeit ebenfalls den
+Beschleuigungs-/Bremsvorgang.</p>
+
+<p>Sobald Sie auf "OK" klicken, erscheint der neue Controller im
+Hauptfenster. Nachtr&auml;gliche &Auml;nderungen der Einstellungen
+sind m&ouml;glich, wenn Sie mit der rechten Maustaste auf einen
+Controller klicken und im Kontextmen&uuml; "Eigenschaften" ausw&auml;hlen.
+Dieses Men&uuml; bietet auch einen Eintrag zum L&ouml;schen eines
+Controllers. Mit "Datei -&gt; Speichern unter" kann man die
+Einstellungen der Controller in eine Datei sichern, um sie
+sp&auml;ter mit "Datei -&gt; &Ouml;ffnen" wieder zu laden.</p>
+
+<h3>Main program control</h3>
+<p>Neben den normalen Men&uuml;eintr&auml;gen befinden sich unterhalb
+des Men&uuml;balkens u.a. drei Schalter, deren Funktionen hier kurz
+erl&auml;utert werden:</p>
+<ol>
+<li><img src="start_layout.png" alt="Button start layout">
+Power on</li>
+<li><img src="stop_layout.png" alt="Button stop layout"> Power off</li>
+<li><img src="emergency.png" alt="button emergency halt"> Emergency stop +
+Power off</li>
+</ol>
+<p>Diese Funktionen sind nur anw&auml;hlbar, also farbig, wenn eine
+Verbindung zum SRCP-Server aktiv ist. Ansonsten sind sie ausgegraut.</p>
+
+<h3>Controller operation</h3>
+<p>Starten Sie das Programm und legen Sie einen Controller an. Wenn
+Sie nun mit der Maus ein paar Sekunden auf ein Steuerelement zeigen
+(nicht klicken), bekommen sie eine Erkl&auml;rung angezeigt (Tooltip).
+Deshalb und weil alles selbsterkl&auml;rend sein sollte, verzichte
+ich hier auf eine n&auml;here Beschreibung. Nur wenige kurz
+Punkte:</p>
+<ul>
+<li>Wenn sie auf den Schalter mit dem Name/Alias klicken, wird
+jeweils die jeweils andere Bezeichnung angezeigt.</li>
+<li>Auf die gleiche Weise kann man von Anzeige "Real Speed" auf
+"Speed Steps" umschalten.</li>
+</ul>
+
+<h3>Delayed acceleration and breaking</h3>
+<p>Wird auf den gr&uuml;nen, gelben oder roten Streifen neben dem
+Schieberegler oder auf den Bremsbutton geklickt, wandert der
+Schieberegler mit der eingestellten Brems- und
+Beschleunigungsverz&ouml;gerung in Richtung Zielwert. Dieses wird
+aber vorzeitig beendet, wenn</p>
+<ul>
+<li>der Schieberegeler bet&auml;tigt wird (per Maus oder
+Tastatur),</li>
+<li>ein anderer SRCP-Client die Geschwindigkeit der Lok ver&auml;ndert
+(siehe <a href="#sync">Synchronisation mit anderen
+Controllern</a>),</li>
+<li>eine andere Zielgeschwindigkeit angefordert wird oder</li>
+<li>ein Nothalt ausgel&ouml;st wird.</li>
+</ul>
+
+<h3>Keyboard shortcuts</h3>
+<table border summary="Keyboard shortcuts">
+<tr>
+<td>Spacebar</td>
+<td>Change direction of travel (current controller)</td>
+</tr>
+<tr>
+<td>° (Degree)</td>
+<td>Switch function 0 (current controller)</td>
+</tr>
+<tr>
+<td>F1...F12</td>
+<td>Switch special functions 1...12 (current controller)</td>
+</tr>
+<tr>
+<td>&lt;Ctrl&gt;-x</td>
+<td>Emergency stop (current controller)</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-b</td>
+<td>Break (current controller)</td>
+</tr>
+<tr>
+<td>Arrow key Up/Down</td>
+<td>Increase/Decrease velocity by 1 step (current controller)</td>
+</tr>
+<tr>
+<td>Page up/donw</td>
+<td>Increase/Decrease velocity by 1/10 of maximum velocity (current
+    controller)</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>Change focus to next controller</td>
+</tr>
+<tr>
+<td>&lt;Ctrl&gt;-n</td>
+<td>Add new locomotive controller</td>
+</tr>
+<tr>
+<td>&lt;Ctrl&gt;-o</td>
+<td>Controllerfeld aus Datei laden</td>
+</tr>
+<tr>
+<td>&lt;Ctrl&gt;-q</td>
+<td>Exit program</td>
+</tr>
+<tr>
+<td>&lt;Ctrl&gt;-s</td>
+<td>Digital power on/off</td>
+</tr>
+</table>
+
+<h3>Decoder programming</h3>
+<p>No description available yet. The dialog window may be
+selfexplanatory in most cases.</p>
+
+<h2><a name="sync"
+        id="sync">Synchronization with other SRCP-clients</a></h2>
+<p>Da ein SRCP-Server in der Regel die Kommunikation mit mehreren
+SRCP-Clients unterst&uuml;tzt, ist es m&ouml;glich, dass dieselbe
+Lok von mehreren Benutzern gleichzeitig bedient wird. Um die
+Controlleranzeige synchron mit den tats&auml;chlich eingestellten
+Fahrwerten zu halten, unterst&uuml;tzt dtcltiny die Auswertung des
+Infoports. Diese Funktion ist automatisch aktiv, muss also nicht
+explizit eingeschaltet werden.
+Automatische Beschleunigungs- und Bremsvorg&auml;nge werden bei
+Beeinflussung vom Infoport abgebrochen.</p>
+
+<p>Um die Beeinflussung einer mit dtcltiny gesteuerten Lok von anderen
+SRCP-Clients zu verhindern, unterst&uuml;tzt dtcltiny den SRCP-Befehl
+"LOCK". Damit l&auml;sst sich der Zugriff durch andere Controller
+verhindern bzw. explizit erlauben; dtcltiny kann die entsprechende
+Lokomotive damit wahlweise exklusiv steuern. Ein- und Ausschalten
+l&auml;&szlig;t sich diese Funktion &uuml;ber das Kontextmen&uuml;
+des entsprechenden Controllers (Sperren/Entsperren).</p>
+
+<h2>Automation</h2>
+<p>In cooperation with an other SRCP client, which can provide special
+information about the railway route to be covered, dtcltiny can
+automatically controll trains on a railway model layout. This automation
+feature encloses move off in front of signals, switching from stop to
+permission to proceed, keep speed limits respectively abide target
+speeds on track and halt in front of stop signals.</p>
+
+<p>This functionality is based on the SRCP Generic Messages (GM)
+technology, introduced by protocol version 0.8.4. The GM extension
+enables SRCP clients to exchange types of information which are not part
+of the SRCP specification. In case of dtcltiny CRCF (<a
+href="http://der-moba.de/index.php/CRCF_-_Common_Railroad_Configuration_Files_0.2.0">Common
+Railroad Configuration Files</a>) as a kind of freely extensible macro
+language is used to encapsulate higher level data.</p>
+
+<p>The program spdrs60 (<a href="http://spdrs60.sourceforge.net/"
+>http://spdrs60.sourceforge.net/</a>) can be used as communication counter
+part answering requests about layout data. For more details please refer
+to the spdrs60 handbook, chapter 8. spdrs60 can handle routes
+configurated with data corresponding their length, speedlimits, train-numbers
+etc. As spdrs60 can act as CRCF server these data can be requested by
+CRCF clients like dtcltiny.</p>
+
+<p>In order to activate automation several requirements must be met,
+first for spdrs60:</p>
+
+<ul>
+    <li>The automated railway track must be completely covered by routes.</li>
+    <li>Routes must be equiped with entry and exit signals (at least
+    virtually).</li>
+    <li>Routes must be configured to be released by occupation of the
+    correct track. Automatical route release enables spdrs60 to forward
+    train numbers from one route to the following route.</li>
+    <li>All routes must be configurated with data about their length and
+    target speed respective speedlimit.</li>
+    <li>Routes used by controlled trains must contain the right train
+    number.</li>
+    <li>The same train number may not be set at different routes at the
+    same time.</li>
+    <li>The layout properties for Generic Messages (menu Edit Settings)
+    must be set to enable broadcasted CRCF messages.</li>
+</ul>
+<p>For dtcltiny the following requirements must be met:</p>
+<ul>
+    <li>The user option for model scale must be set correctly.</li>
+    <li>The alias value for the respective train controller must be set
+    to the same train number used in spdrs60.</li>
+    <li>In train controller settings for CRCF, speed control must be
+    set to active.</li>
+    <li>The maximum value for real speed (in km/h) must be set
+    correctly. dtcltiny currently does not provide automatical speed
+    calibration, so here you are on your own.</li>
+</ul>
+
+<p>The following steps are carried out during automated drive:</p>
+
+<ul>
+    <li>The locking table (spdrs60) anounces the train occupying a new
+    route via broadcasted CRCF message.</li>
+    <li>The train controller (dtcltiny) now knows the route id the train
+    currently uses. If the basic data of this route (length, speedlimit
+    etc.) is not known by the train controller, this data is requested
+    from spdrs60. The controller owned route data is displayed in a list
+    window opened by context menu "Routes". The currently used route is
+    highlighted accordingly. During normal operation changing data is
+    updated accordingly. Does the displayed data not comply to the real
+    situation on the layout the controller can not work properly.</li>
+    <li>If the train is currently halted in front of a stop signal and
+    the signal changes to proceed, the train will move off and
+    accelerate until the target speed is reached.</li>
+    <li>If the train drives at target speed and the new route has a
+    different target speed, the acual speed is adjusted to the new
+    value.</li>
+    <li>When the train controller receives the message about a route
+    change, a break point is calulated to stop the train in front of the
+    new route exit signal.</li>
+    <li>The length value of the route is used in terms of this is the
+    distance from the "new route announcement" to the exit signal. On
+    the layout this distance may be different from the distance between
+    entry and exit signal of a route.</li>
+</ul>
+
+<h2>How to add more decoders and protocols</h2>
+<p>The available decoders and protocols are stored in separate text
+files named "decoders" and "protocols". They can be found in directory
+&raquo;data&laquo; where they can be edited by any text editor.
+Generally it is possible to add any number of new items as long as the
+text format and its key-value pair systematics is kept.
+New values are read by dtcltiny on opening the controller configuration
+dialog window (context menu "Properties").</p>
+
+<h2>Liability</h2>
+<p>The authors of this software do not grant any liability regarding
+correct function or damages caused by this software.</p>
+
+<h2>License</h2>
+<p>The sourcecode is copyrighted according to GPLv2. For more
+information please refer to
+<a href="http://www.gnu.org/">http://www.gnu.org/</a>.</p>
+
+<h2>Thanks</h2>
+<ul>
+<li>Stefan Preis, who developed dtcl which was used as a model for this
+program.</li>
+<li>Torsten Vogt, who setup DDL and therefore built the base for model
+railroad control development on Linux at all.</li>
+<li>All users who gave constructive feedback.</li>
+<li>All developers of SRCP.</li>
+</ul>
+<small><a href="mailto:mail@markus-pfeiffer.de">Markus Pfeiffer</a>,
+    01.12.2001; translation to English and extension: Guido Scholz</small>
+</body>
+</html>

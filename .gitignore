@@ -1,0 +1,10 @@
+*.o
+*.qm*
+moc_*.cpp
+moc_*.h
+Makefile*
+timestamp.h
+dtcltiny
+
+data/*/*.png
+

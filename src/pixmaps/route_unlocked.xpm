@@ -1,0 +1,18 @@
+/* XPM */
+static const char *route_unlocked_xpm[]={
+"12 12 3 1",
+"# c #000000",
+"a c #808080",
+". c None",
+"............",
+".##########.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".#aaaaaaaa#.",
+".##########.",
+"............"};

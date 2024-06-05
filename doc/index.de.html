@@ -1,0 +1,508 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org">
+<title>Anleitung zu dtcltiny</title>
+</head>
+<body>
+<table summary="decoration" width="100%">
+<tr>
+<td height="12" bgcolor="#3399CC">
+<h1>dtcltiny</h1>
+</td>
+</tr>
+</table>
+
+<h2>Einf&uuml;hrung</h2>
+<p>dtcltiny ist ein Programm, mit dem man Loks auf einer Modellbahn
+steuern kann, die mit einem Digitaldecoder ausger&uuml;stet sind.
+Es stellt f&uuml;r jede Lok einen Regler zur Verf&uuml;gung, mit
+dem sich Geschwindigkeit, Fahrtrichtung und Sonderfunktionen
+einstellen lassen. Nebenbei bietet es noch die M&ouml;glichkeit,
+Decoder nach dem NMRA-DCC Standard und Uhlenbrock-Decoder zu
+programmieren. Zus&auml;tzlich gibt es noch einige
+Komfortmerkmale; diese werden bei den Bedienungshinweisen
+erl&auml;utert.</p>
+
+<h2>Softwarevoraussetzungen</h2>
+<p>Neben einer funktionierenden Linux-Installation mit X Window
+System und Qt-Bibliotheken (Version 4 oder 5) braucht man
+au&szlig;erdem noch das Gegenst&uuml;ck zu diesem SRCP-Client,
+den SRCP-Server. Dieser sollte die Protokollversion
+SRCP 0.8.4 unterst&uuml;tzen, f&uuml;r Grundfunktionen reichen auch die
+Protokollversionen 0.8.0 bis 0.8.3. SRCP steht f&uuml;r "Simple Railroad
+Command Protocol" und beschreibt einen
+Befehlssatz zur Steuerung von Modellbahnen. Mehr dazu siehe unter
+<a href="http://www.der-moba.de/index.php/Digitalprojekt">Der Moba</a>. In den
+meisten F&auml;llen wird wohl als Server das Programmpacket "srcpd"
+zum Einsatz kommen, das entweder die Aufgabe einer
+Software-Digitalzentrale, oder eine Vermittlerrolle zu einer dort
+angeschlossenen Digitalzentrale &uuml;bernimmt. Mehr zum srcpd findet
+man auf dessen <a href=
+"http://srcpd.sourceforge.net/">Projektseite</a>. Hinweis: Zum
+Ausprobieren kann man dtcltiny auch ohne Server starten.</p>
+
+<h2>Hardwarevoraussetzungen</h2>
+Die Hardwarevoraussetzungen sind abh&auml;ngig vom Server bzw. dessen
+Anbindung an die Modellbahn-Hardware. Das SRCP-Protokoll ist
+netzwerkf&auml;hig (TCP/IP), so dass SRCP-Clients und SRCP-Server auf
+unterschiedlichen Rechnern laufen k&ouml;nnen.
+<p><img src="main-tiny.de.png" alt="Ansicht Hauptfenster"><br>
+<b>Bild 1:</b> Hauptfenster mit Lokreglern und Fahrstra&szlig;enansicht</p>
+
+<h2>Installation</h2>
+<h3>rpm</h3>
+<p>Als root installieren mit <font color="#339900">rpm -i
+&lt;dateiname&gt;</font></p>
+
+<h3>source-rpm</h3>
+<p>Als root neues rpm erstellen mit <font color="#339900">rpm
+--rebuild &lt;dateiname&gt;</font>. Das fertiggestellte Archiv wird
+im Verzeichnis <tt>/usr/src/redhat/RPMS/i386</tt> (bei anderen
+rpm-basierten Distributionen &auml;hnlich, SuSE:
+<tt>/usr/src/packages/RPMS/i586</tt>, Mandrake:
+<tt>/usr/src/RPM/RPMS/i586</tt>) abgelegt. Dies k&ouml;nnen sie wie
+im Abschnitt zuvor beschrieben installieren.</p>
+
+<h3>Quellcode (.tar.gz)</h3>
+<p>Archiv auspacken, z.B. mit <font color="#339900">tar xzf
+dtcltiny-0.4.4.tar.gz</font>. Der Quellcode befindet sich nun im
+Verzeichnis <i>dtcltiny-0.4.4</i>. Wechseln Sie dort hinein und
+erstellen sie das Programm mit <font color="#339900">./configure
+&amp;&amp; make</font>. Nun als root das Programm installieren mit
+<font color="#339900">make install</font>
+</p>
+
+<h2>Starten</h2>
+<p>Zun&auml;chst sollte der SRCP-Server gestartet werden. Die
+Anweisungen dazu entnehmen sie bitte dessen Dokumentation. Bei
+Probebetrieb von dtcltiny kann dieser Schritt entfallen.</p>
+<p>dtcltiny kann entweder &uuml;ber das Men&uuml; (Kategorie "Spiele"),
+oder von einem Terminalfenster folgendermassen gestartet werden</p>
+<blockquote><tt><font color="#339900">dtcltiny
+[&lt;dateiname.dtcl&gt;]</font></tt></blockquote>
+<p>Konkretes Beispiel:</p>
+<blockquote><tt><font color="#339900">dtcltiny
+loco.dtcl</font></tt></blockquote>
+<p><strong>dateiname.dtcl:</strong> Dieser optionale Parameter gibt eine
+Datei an, von dem eine gespeicherte Konfiguration gelesen werden
+soll. Diese Dateien haben normalerweise die Endung ".dtcl" (muss
+mit angegeben werden)</p>
+<p>Ist der Rechner mit dem in den Voreinstellungen des Programms
+angegebenen Server-Namen nicht vorhanden oder nicht erreichbar, bzw.
+l&auml;uft dort kein SRCP-Server, so bringt das Programm eine
+Fehlermeldung. Diese Einstellungen k&ouml;nnen unter dem
+Men&uuml;punkt "Optionen/Einstellungen" vorgenommen werden. Sie
+werden in der Datei <tt>~/.dtcltiny</tt> gespeichert und stehen
+beim n&auml;chsten Programmstart wieder zur Verf&uuml;gung.</p>
+
+<p>Nach dem Start erhalten Sie entweder ein leeres Programmfenster,
+falls keine Konfigurationsdatei geladen wurde, oder ein Fenster mit
+den geladenen Lokomotiv-Steuereinheiten (Controllern). In den
+Benutzereinstellungen l&auml;sst sich eine Konfigurationsdatei
+w&auml;hlen, die automatisch beim Programmstart geladen wird.</p>
+
+<h2>Bedienung</h2>
+
+<h3>Anlegen/&Auml;ndern eines Controllers</h3>
+<p>W&auml;hlen Sie "Controller -&gt; Hinzuf&uuml;gen". Es wird
+ein neuer Controller angelegt, dessen Einstellungen noch angepasst
+werden m&uuml;ssen. &Uuml;ber das Kontextmen&uuml; des Controllers (Klick
+mit rechter Maustaste) w&auml;hlt man dazu den Eintrag "Einstellungen".
+Es erscheint ein Dialog, mit dem Sie die Eigenschaften des neuen
+Controllers festlegen. Der Dialog beinhaltet drei Register.</p>
+
+<h4>Allgemeines</h4>
+<p><img src="locodialog1.png" alt=
+"Lok-Konfigurationsdialog, Tab 1"><br>
+<b>Bild 2:</b> Eigenschaftsdialog mit Register "Allgemeines"</p>
+<p>In diesem Register werden die grundlegenden Eigenschaften des
+Controllers eingestellt. Unten in der Gruppe "Logik" m&uuml;ssen der
+Lok-Decoder, das verwendete Protokoll und die Decoder-Adresse
+ausgew&auml;hlt werden. Zun&auml;chst w&auml;hlen sie bitte den
+verwendeten Lok-Decoder aus der Liste. Falls er nicht in der Liste
+existiert, w&auml;hlen sie einen der beiden generischen Decoder aus, je
+nachdem, ob er mit dem Motorola (M&auml;rklin) oder dem NMRA DCC
+Protokoll arbeitet. Nun schauen sie in die Liste der angebotenen
+Protokolle; dort haben sie im einfachsten Fall keine
+Wahlm&ouml;glichkeit. Wenn sich doch mehrere Protokolle in der
+Liste befinden, k&ouml;nnen sie entweder frei w&auml;hlen oder m&uuml;ssen
+es bei dem vom Decoder angebotenen Wert belassen. Eine Erkl&auml;rung der
+Kennwerte des ausgew&auml;hlten Protokolls finden sie direkt neben
+dem Adressfeld. Anschliessend m&uuml;ssen sie noch die Adresse
+einstellen.</p>
+<p>Einen weitgehend informativen Charakter haben die Felder Name (Lok)
+und Alias (Zug). Dort k&ouml;nnen sie der Lok und dem Zug jeweils
+einen beliebigen Namen geben (nicht zu lang). F&uuml;r den Alias-Wert
+ist es zur Nutzung erweiterter Automatikfunktionen erforderlich, ihn
+als Zugnummer zu nutzen (z.B. 2341); Deteils hierzu folgen in einem
+anderen Kapitel. Einer der beiden
+Bezeichnungen kann in der Steuereinheit angezeigt werden. Ebenfalls
+optional kann man ein kleines Lokomotiv-Symbol f&uuml;r den Controller
+ausw&auml;hlen. Mit Klick auf das Ordnersymbol &ouml;ffnet sich ein
+Dateidialog, mit dem sie eine xpm-Datei ausw&auml;hlen k&ouml;nnen.</p>
+<p>Die Checkbox "Fahrtrichtungs-Logik umkehren" kann beim Neuanlegen
+einer Lok erstmal inaktiv gelassen werden. Sollte sich herausstellen,
+dass die tats&auml;chliche Fahrrichtung der Lok nicht mit der im
+Controller angezeigten Richtung &uuml;bereinstimmt, so kann dies
+durch Setzen dieser Einstellung korrigiert werden.</p>
+
+<h4>Funktionen</h4>
+<p><img src="locodialog2.png" alt=
+"Lok-Konfigurationsdialog, Tab 2"><br>
+<b>Bild 3:</b> Eigenschaftsdialog mit Register "Funktionen"</p>
+<p>Abh&auml;ngig vom gew&auml;hlten Decoder stehen unterhalb des
+Funktionsreiters
+keine oder bis zu 28 Funktionen zur Konfiguration zu Verf&uuml;gung.
+Ob alle einstellbaren Funktionen tats&auml;chlich benutzt werden
+k&ouml;nnen, h&auml;ngt vom Decoder selbst ab (siehe dessen
+Bedienungsanleitung). Mit der Option "Sichtbar" l&auml;sst sich einstellen,
+ob die entsprechende Funktion als Schaltfl&auml;che in der Steuereinheit
+angezeigt wird. Es lassen sich aus Platzgr&uuml;nden nur bis zu
+sechs Funktionen dort unterbringen. Bis zu zw&ouml;lf Funktionen lassen
+sich &uuml;ber die Funktionstasten einer Computertastatur aktivieren.
+In der n&auml;chsten Spalte
+kann man ausw&auml;hlen, welcher Effekt mit der Funktion gesteuert
+wird. In der letzten Spalte kann man die Funktionsweise des
+Bet&auml;tigungsknopfs einstellen. In der Einstellung
+&raquo;Schalter&laquo; arbeitet er wie ein Schalter, d.h. er rastet im
+Aus- und An-Zustand ein. Wenn &raquo;Taster&laquo; gew&auml;hlt ist,
+funktioniert der Knopf als Taster, d.h. die Funktion ist nur
+solange an, wie der Knopf gedr&uuml;ck wird. Letzteres ist z.B. bei
+einem Entkuppler oder Lokpfeife sinnvoll.</p>
+
+<h4>Geschwindigkeit</h4>
+<p><img src="locodialog3.png" alt=
+"Lok-Konfigurationsdialog, Tab 3"><br>
+<b>Bild 4:</b> Eigenschaftsdialog mit Register "Geschwindigkeit"</p>
+
+<p>Im Reiter &raquo;Geschwindigkeit&laquo; gibt es folgende
+Einstellungen:</p>
+<dl>
+    <dt>Maximum</dt>
+    <dd> Die h&ouml;chste Fahrstufe, die vom Controller eingestellt
+werden kann. Sie bewirkt eine Begrenzung der H&ouml;chstgeschwindigkeit.
+Den Wert hier nicht auf maximal zu stellen, ist nur sinnvoll bei
+Decodern, die keine einstellbare H&ouml;chstgeschwindigkeit haben.</dd>
+<dt>Durchschnitt</dt>
+<dd>Eine beliebige mittlere Geschwindigkeit, die durch
+Dr&uuml;cken des gelben Streifens neben dem Geschwindigkeitsregler
+eingestellt wird.</dd>
+<dt>Minimum</dt>
+<dd>Wie Durchschnitt, nur geringere Geschwindigkeit, aktivierbar durch
+den gr&uuml;nen Streifen.</dd>
+<dt>H&ouml;chstgeschwindigkeit</dt>
+<dd>Oben kann noch die Vorbild-H&ouml;chstgeschwindigkeit
+eingestellt werden. Dies dient zur Anzeige der
+momentanen Vorbild-Geschwindigkeit im Controller-Fenster.</dd>
+<dt>Beschleunigung<dt>
+<dd>Die Wartezeit in Millisekunden zwischen einzelnen Fahrstufen beim
+Beschleunigen. Alle Fahrstufen bis zur Endgeschwindigkeit werden
+durchlaufen. Bei Decodern mit 128 Fahrstufen sollte man auf jeden
+Fall einen niedrigeren Verz&ouml;gerungswert einstellen, als es der
+Voreinstellung entspricht.
+Wenn der Decoder eine einstellbare Beschleunigung bietet, sollte
+man hier null einstellen.</dd>
+<dt>Bremsen</dt>
+<dd>Es gilt das gleiche wie bei Beschleunigung beschrieben, jedoch
+f&uuml;r die Verz&ouml;gerung beim Bremsen.</dd>
+</dl>
+
+<p>Hinweis: Die Software-Verz&ouml;gerung beim Beschleunigen und
+Bremsen tritt nur in Kraft, wenn die Fahrgeschwindigkeit mit
+einem Klick auf den gr&uuml;nen, gelben oder roten Balken, sowie
+dem Bremssymbol gew&auml;hlt wird. Der Schieberegler folgt dabei der
+momentanen Geschwindigkeit. Wird w&auml;hrend einer solchen Phase
+am Schieberegler gezogen, bricht der Beschleuigungs-/Bremsvorgang
+ab (diese Funktion ist derzeit aus&szlig;er Betrieb). Wird dieselbe Lok
+noch von einem anderen Regler (z.B. von einem
+Clubkollegen) gesteuert, unterbricht dessen Einflu&szlig;nahme auf
+die Lokgeschwindkeit ebenfalls den Beschleuigungs-/Bremsvorgang (ist
+ebenfalls au&szlig;er Betrieb).</p>
+<p>Sobald Sie auf "OK" klicken, werden die neuen Einstellungen f&uuml;r
+den Controller im Hauptfenster &uuml;bernommen. Nachtr&auml;gliche
+&Auml;nderungen der Einstellungen sind jederzeit m&ouml;glich, wenn Sie
+mit der rechten Maustaste auf einen Controller klicken und im
+Kontextmen&uuml; "Eigenschaften" ausw&auml;hlen.
+Dieses Men&uuml; bietet auch einen Eintrag zum L&ouml;schen eines
+Controllers. Mit "Datei -&gt; Speichern unter" kann man die Einstellungen der
+Controller in eine Datei sichern, um sie sp&auml;ter mit "Datei
+-&gt; &Ouml;ffnen" wieder zu laden.</p>
+
+<h3>Bedienung der Hauptfunktionen</h3>
+<p>Neben den normalen Men&uuml;eintr&auml;gen befinden sich unterhalb
+des Men&uuml;balkens u.a. drei Schalter, deren Funktionen hier kurz
+erl&auml;utert werden:</p>
+<ol>
+<li><img src="start_layout.png" alt="Button start layout">
+Anschalten des Stroms</li>
+<li><img src="stop_layout.png" alt="Button stop layout"> Abschalten
+des Stroms</li>
+<li><img src="emergency.png" alt="button emergency halt"> Nothalt +
+Abschalten des Stroms</li>
+</ol>
+<p>Diese Funktionen sind nur anw&auml;hlbar, also farbig, wenn eine
+Verbindung zum SRCP-Server aktiv ist. Ansonsten sind sie ausgegraut.</p>
+
+<h3>Bedienung eines Controllers</h3>
+<p>Starten Sie das Programm und legen Sie einen Controller an. Wenn
+Sie nun mit der Maus ein paar Sekunden auf ein Steuerelement zeigen
+(nicht klicken), bekommen sie eine Erkl&auml;rung angezeigt (Tooltip).
+Deshalb und weil alles selbsterkl&auml;rend sein sollte, verzichte
+ich hier auf eine n&auml;here Beschreibung. Nur wenige kurz
+Punkte:</p>
+<ul>
+<li>Wenn sie auf den Schalter mit dem Name/Alias klicken, wird
+auf die jeweils andere Bezeichnung umgeschaltet.</li>
+<li>Auf die gleiche Weise kann man die Anzeige f&uuml;r die "Reale
+Geschwindigkeit" auf "Decoder Stufen" umschalten.</li>
+</ul>
+
+<h3>Verz&ouml;gertes Beschleunigen und Bremsen</h3>
+<p>Wird auf den gr&uuml;nen, gelben oder roten Streifen neben dem
+Schieberegler oder auf den Bremsbutton geklickt, wandert der
+Schieberegler mit der eingestellten Brems- und
+Beschleunigungsverz&ouml;gerung in Richtung Zielwert. Dieses wird
+aber vorzeitig beendet, wenn</p>
+<ul>
+<li>der Schieberegeler bet&auml;tigt wird (per Maus oder
+Tastatur),</li>
+<li>ein anderer SRCP-Client die Geschwindigkeit der Lok ver&auml;ndert
+(siehe <a href="#sync">Synchronisation mit anderen
+Controllern</a>),</li>
+<li>eine andere Zielgeschwindigkeit angefordert wird oder</li>
+<li>ein Nothalt ausgel&ouml;st wird.</li>
+</ul>
+
+<h3>Bedienung per Tastatur</h3>
+<table border summary="Tastaturk&uuml;rzel">
+<tr>
+<td>Leertaste</td>
+<td>Richtungswechsel (aktueller Controller)</td>
+</tr>
+<tr>
+<td>° (Grad)</td>
+<td>Schaltet Funktion 0 (aktueller Controller)</td>
+</tr>
+<tr>
+<td>F1...F12</td>
+<td>Schaltet Sonderfunktionen 1...12 (aktueller Controller)</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-x</td>
+<td>Nothalt (aktueller Controller)</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-b</td>
+<td>Bremsen (aktueller Controller)</td>
+</tr>
+<tr>
+<td>Pfeiltaste nach oben / nach unten</td>
+<td>Geschwindigkeit um 1 Stufe erh&ouml;hen/verringern (aktueller
+Controller)</td>
+</tr>
+<tr>
+<td>Bild hoch/runter</td>
+<td>Geschwindigkeit um 1/10 der Maximalgeschwindigkeit
+erh&ouml;hen/verringern (aktueller Controller)</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>Wechseln auf n&auml;chsten Controller</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-n</td>
+<td>Neuen Lokcontroller anlegen</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-o</td>
+<td>Neue Datei &ouml;ffnen</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-q</td>
+<td>Programm beenden</td>
+</tr>
+<tr>
+<td>&lt;Strg&gt;-p</td>
+<td>Digitalstrom ein-/ausschalten</td>
+</tr>
+</table>
+
+<h3>Programmierung von Decodern</h3>
+<p>Beschreibung folgt sp&auml;ter, d&uuml;rfte aber auch ohne
+Beschreibung zu Bew&auml;ltigen sein.</p>
+
+<h2><a name="sync" id="sync">Synchronisation mit anderen
+Lok-Steuerungen</a></h2>
+<p>Da ein SRCP-Server in der Regel die Kommunikation mit mehreren
+SRCP-Clients unterst&uuml;tzt, ist es m&ouml;glich, dass dieselbe
+Lok von mehreren Benutzern gleichzeitig bedient wird. Um die
+Controlleranzeige synchron mit den tats&auml;chlich eingestellten
+Fahrwerten zu halten, unterst&uuml;tzt dtcltiny die Auswertung des
+sogenannten Infoports. Diese Funktion ist automatisch aktiv, muss
+also nicht explizit eingeschaltet werden.
+Automatische Beschleunigungs- und Bremsvorg&auml;nge werden bei
+Beeinflussung vom Infoport abgebrochen (derzeit au&szlig;er Funktion).</p>
+<p>Um die Beeinflussung einer mit dtcltiny gesteuerten Lok von anderen
+SRCP-Clients zu verhindern, unterst&uuml;tzt dtcltiny den SRCP-Befehl
+"LOCK". Damit l&auml;sst sich der Zugriff durch andere Controller
+verhindern bzw. explizit erlauben; dtcltiny kann die entsprechende
+Lokomotive damit wahlweise exklusiv steuern. Ein- und Ausschalten
+l&auml;&szlig;t sich diese Funktion &uuml;ber das Kontextmen&uuml;
+des entsprechenden Controllers (Sperren/Entsperren). Eine gegebenenfalls
+vorhandene Sperre wird in der Steuereinheit neben der Digitaladresse
+angezeigt.</p>
+
+<h2>Automatikbetrieb</h2>
+<p>In Kombination mit einem anderen SRCP-Client, der dtcltny mit
+speziellen Angaben zur Fahrstrecke versorgt, ist es m&ouml;glich,
+Z&uuml;ge vollautomatisch &uuml;ber eine Modellanlage laufen zu
+lassen. Dieser Automatikbetrieb schlie&szlig;t das Losfahren vor
+Signalen, die von Halt auf Fahrt wechseln, das Einhalten von
+Geschwindigkeitsbeschr&auml;nkungen bzw. Sollgeschwindigkeiten
+sowie das Halten vor Signalen ein.</p>
+
+<p>Diese Funktionalit&auml;t wird in dtcltiny durch das Verwenden von
+Standardnachrichten (Generic Messages, GM) m&ouml;glich. Mit dieser seit
+SRCP 0.8.4 implementierten Erweiterung k&ouml;nnen SRCP-Clients
+Nachrichten (META-Informationen) austauschen, die &uuml;ber den normalen
+SRCP-Sprachumfang hinaus gehen. Die Kapselung dieser Zusatzinformationen
+erfolgt im Falle von dtcltiny in CRCF (Common Railroad Configuration
+Files), einer Art Makro-Sprache, die weitgehend frei formulierbare
+Dateneinheiten erm&ouml;glicht (siehe:
+<a href="http://der-moba.de/index.php/CRCF_-_Common_Railroad_Configuration_Files_0.2.0">CRCF</a>).</p>
+
+<p>Als Kommunikationspartner f&uuml;r dtcltiny kann hier das Programm spdrs60
+dienen (<a
+href="http://spdrs60.sourceforge.net/">http://spdrs60.sourceforge.net/</a>).
+Zur Verwendung von CRCF siehe auch im dortigen Handbuch das Kapiltel 8.
+In spdrs60 lassen sich Fahrstra&szlig;en anlegen, die sich mit Werten zu deren
+L&auml;nge, Geschwindigkeitsbeschr&auml;nkungen, Zugbelegung etc. n&auml;her
+beschreiben lassen. Diese Informationen stellt das Programm spdrs60
+&uuml;ber CRCF f&uuml;r Abfragen zur Verf&uuml;gung, bzw. sendet diese als
+Rundrufnachrichten an angebundene SRCP-Clients. Es arbeitet also als
+CRCF-Server und CRCF-Client. dtcltiny arbeitet bisher nur als
+CRCF-Client.</p>
+
+<p>Die Grundlage f&uuml;r einen funktionierenden Automatikbetrieb sind
+mehrere Dinge, zun&auml;chst seien die f&uuml;r das Programm spdrs60
+aufgelistet:</p>
+<ul>
+    <li>Der betroffene Gleisbereich muss in spdrs60 komplett erfasst
+    sein.</li>
+    <li>Die Fahrabschnitte m&uuml;ssen l&uuml;ckenlos als Fahrstra&szlig;en
+    erfasst sein und mit den entsprechenden Start- und Zielsignalen (ggf.
+    virtuell) ausgestattet sein.</li>
+    <li>Die Fahrstra&szlig;en m&uuml;ssen so konfiguriert sein, dass bei
+    korrekter Belegt- bzw. Freimeldung eines Gleisabschnittes die
+    Fahrstra&szlig;e wieder aufgel&ouml;st wird. Das automatische
+    Aufl&ouml;sen einer Fahrstra&szlig;e sorgt beim spdrs60 daf&uuml;r,
+    dass die Zugnummer zur n&auml;chsten Fahrstra&szlig;e &uuml;bergeben
+    wird.</li>
+    <li>Bei allen Fahrstra&szlig;en m&uuml;ssen Angaben &uuml;ber deren
+    L&auml;nge und Sollgeschwindigkeit konfiguriert sein.</li>
+    <li>In spdrs60 muss eine Zugnummer bei der aktuell vom Zug
+    genutzten Fahrstra&szlig;e hinterlegt sein.</li>
+    <li>Die gleiche Zugnummer darf nicht mehrfach bei verschiedenen
+    Fahrstra&szlig;en vergeben sein.
+    <li>In den Einstellungen f&uuml;r das Gleisbild (Bearbeiten
+    Einstellungen) muss unter dem Reiter "Standardnachrichten" das
+    Senden von CRCF-Daten als Rundruf aktiv sein.</li>
+</ul>
+<p>F&uuml;r dtcltiny sind folgende Voraussetzungen zu beachten:<p/>
+<ul>
+    <li>In den Benutzereinstellungen (Optionen Einstellungen) muss der
+    richtige Modellbahnma&szlig;stab eingestellt sein, z.B. H0.</li>
+    <li>In dtcltiny muss im Alias-Wert f&uuml;r die betroffenen Z&uuml;ge
+    eine Zugnummer hinterlegt sein. Diese muss der Konfiguration in
+    spdrs60 entsprechen und darf nur ein rein numerischer Wert sein. Als
+    Anregung f&uuml;r eine geeignete Zahl mag die &Uuml;bersicht der
+    DeutschenBahn AG (<a
+        href="http://www.bahnstatistik.de/Zugnummern.htm">
+    http://www.bahnstatistik.de/Zugnummern.htm</a>) n&uuml;tzlich sein.</li>
+    <li>Bei den Eigenschaften der betroffenen Lokomotiv-Controller
+    m&uuml;ssen unter dem Reiter "CRCF" die Optionen f&uuml;r die
+    Geschwindigkeitskontrolle aktiv sein.</li>
+    <li>Die Angabe f&uuml;r die maximale reale Geschwindigkeit muss
+    m&ouml;glichst genau sein. Das automatische Messen einer
+    Geschwindigkeitseichkurve erlaubt dtcltiny derzeit nicht.</li>
+</ul>
+<p>W&auml;hrend der Automatikfahrt laufen folgende Schritte ab:</p>
+<ul>
+    <li>Das Stellwerk (spdrs60) meldet, wenn ein Zug eine neue
+    Fahrstra&szlig;e nutzt.</li>
+    <li>Die Zugsteuerung (dtcltiny) wei&szlig; nun, wo sich der Zug
+    befindet. Sind zu der Fahrstra&szlig;e keine Daten bekannt, werden
+    diese (Name, L&auml;nge, Geschwindigkeitsbeschr&auml;nkung, aktueller
+    Begriff des Zielsignals) beim Stellwerk abgefragt und eingesammelt.
+    Die gesammelten Fahrstra&szlig;endaten lassen sich &uuml;ber das
+    Kontextmen&uuml; der Loksteuerung (Fahrstra&szlig;en) verfolgen. Die
+    aktuelle Fahrstra&szlig;e ist in der dortigen Liste markiert. Die
+    Daten werden im Laufe des Betriebs aktualisiert, soweit sie sich
+    &auml;ndern. Weichen die dargestellten Daten vom tats&auml;chlichen
+    Zustand der Anlage ab, kann die Zugsteuerung nicht korrekt arbeiten.</li>
+    <li>Steht der Zug vor einem Signal und hat das Startsignal, welches
+    ja das Zielsignal der aktuellen Fahrstra&szlig;e ist, auf Fahrt
+    gewechselt, dann f&auml;hrt der Zug los und beschleunigt bis zur
+    Sollgeschwindigkeit. War der Zug bei Fahrstra&szlig;enwechsel schon in
+    Fahrt, passt die Steuerung die Geschwindikeit entsprechend an und
+    berechnet den n&auml;chsten Bremspunkt. Irgendwann l&ouml;st die
+    zuletzt genutzte Fahrstra&szlig;e automatisch auf und &uuml;bertr&auml;gt
+    die Zugnummer auf die n&auml;chste Fahrstra&szlig;e.</li>
+    <li>Davon erf&auml;hrt wieder die Zugsteuerung und berechnet auf Basis
+    der aktuellen Fahrstra&szlig;endaten, den Bremspunkt (bei Haltsignal) bzw.
+    passt die Geschwindigkeit an die Sollgegebenheiten an.</li>
+    <li>Im Laufe seiner Fahrt sammelt die Zugsteuerung weiter die Daten
+    unbekannter Fahrstra&szlig;en ein, bis der Zug nur noch bekanntes Terrain
+    bef&auml;hrt. Dann werden keine statischen Daten (L&auml;nge, etc.) mehr
+    abgefragt, sondern nur noch dynamische Daten, bzw. explizit der
+    aktuelle Begriff des Zielsignals.</li>
+</ul>
+
+<p>Ist die oben beschriebene Basiskonfiguration vorhanden, so sendet man
+zum Start des Automatikbetriebes &uuml;ber das Fahrstra&szlig;enmen&uuml;
+von sprds60 (Alle Zugnummern senden) den aktuellen Aufenthaltsort
+der Z&uuml;ge an dtcltiny. Abh&auml;ngig vom aktuellen Begriff der
+entsprechenden Signale, starten die Z&uuml;ge die Fahrt, bzw. warten auf
+das Einstellen der n&auml;chsten Fahrstra&szlig;e durch den
+Fahrdienstleiter, um dann automatisch los zu fahren.</p>
+
+<h2>Hinzuf&uuml;gen weiterer Lok-Decoder und Protokolle</h2>
+<p>Im Gegensatz zu fr&uuml;hen Versionen von dtcltiny sind die
+Informationen &uuml;ber Lok-Decoder und Protokolle nicht mehr im
+Quellcode enthalten, sondern werden aus separat abgelegten Dateien
+geladen; es gibt jeweils
+eine mit dem Namen "decoders" und "protocols". Sie befinden sich im
+Verzeichnis &raquo;data&laquo; und lassen sich mit einem beliebigen
+Texteditor bearbeiten. Es k&ouml;nnen beliebig neue
+Eintr&auml;ge hinzugef&uuml;gt werden und bestehende gel&ouml;scht
+oder ver&auml;ndert werden. Neue Einstellungen stehen zur
+Verf&uuml;gung, sobald der Konfigurationsdialog geladen wird ("Add
+Loco" oder "Properties"). Weitere Hinweise finden sie in den
+Kommentarzeilen der Dateien selbst.</p>
+
+<h2>Haftung</h2>
+<p>Die Autoren &uuml;bernehmen keinerlei Haftung f&uuml;r Sch&auml;den,
+die mit diesem Programm entstehen.</p>
+
+<h2>Lizenz</h2>
+<p>Der Quellcode dieser Software unterliegt der GPLv2. N&auml;heres
+ist auf <a href="http://www.gnu.org/">http://www.gnu.org/</a> zu
+erfahren.</p>
+
+<h2>Danke an</h2>
+<ul>
+<li>Stefan Preis, dessen Programm dtcl als Basis f&uuml;r diese
+Weiterentwicklung diente.</li>
+<li>Torsten Vogt, der mit DDL die Entwicklung von
+Modellbahnsteuerungs-Software auf Linux erst in Schwung gebracht
+hat.</li>
+<li>Alle Benutzer von denen ich konstuktive R&uuml;ckmeldung
+bekommen habe.</li>
+<li>Alle Entwickler von SRCP.</li>
+</ul>
+<small><a href="mailto:mail@markus-pfeiffer.de">Markus
+Pfeiffer</a>, 01.12.2001; &Uuml;berarbeitung: Guido Scholz</small>
+</body>
+</html>
