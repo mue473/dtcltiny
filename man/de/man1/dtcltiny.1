@@ -1,0 +1,128 @@
+'\" t
+.\" ** The above line should force tbl to be a preprocessor **
+.\"
+.\" Manual page for dtcltiny
+.\" process with:
+.\"   groff -man -Tlatin1 dtcltiny.1 | less
+.\"or
+.\"   groff -man -Tutf8 dtcltiny.1 | less
+.\"
+.\" Copyright (C) 2016 Guido Scholz
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the file COPYING that comes with the
+.\" dtcltiny distribution.
+.\"
+.\" Sun Mar 13 09:15:00 CET 2016  Guido Scholz <guido-scholz@gmx.net>
+.\"
+.TH DTCLTINY 1 2016-03-13 Linux "SRCP Clients"
+.SH NAME
+dtcltiny \- SRCP basierte Lokomotivsteuerung für digitale Modellbahnen.
+.\"
+.\"
+.SH ÜBERSICHT
+.B dtcltiny
+[
+.I Optionen
+] [
+.I Dateiname
+]
+.\"
+.\"
+.SH BESCHREIBUNG
+.I dtcltiny
+ist ein grafischer Simple Railroad Command Protocol (SRCP) Client, mit
+dem sich auf einer digitalen Modellbahn komfortabel Lokomotiven steuern
+lassen.  Die Gestaltung wurde weitgehend vom Programm 
+.I dtcl
+(Digital Train Control, Stefan Preis) abgeleitet.  Zur Anbindung an die
+Modellbahn-Hardware benötigt dieses Programm einen SRCP-Server (z.B.
+srcpd),  der die SRCP Steuerbefehle entgegen nimmt und in geeigneter
+Form an die Modellbahn weiter gibt.
+.PP
+Da SRCP netzwerkfähig ausgelegt ist, kann
+.I dtcltiny
+sowohl mit einem lokal installierten SRCP-Server als auch mit einem
+über TCP/IP Netzwerk angebundenen Server zusammenarbeiten.  Aus
+historischen Gründen gib es verschiedene SRCP-Versionen, die teilweise
+inkompatibel untereinander sind.
+.I dtcltiny
+unterstützt SRCP in der Version 0.8.4 und benötigt daher einen
+entsprechenden SRCP-Server, wie den
+.I srcpd
+(http://srcpd.sourceforge.net/). Für Grundfunktionen arbeitet
+.I dtcltiny
+auch mit Servern der SRCP-Versionen 0.8.0 bis 0.8.3 zusammen.
+.SS "Standardnachrichten (Generic Messages)"
+.I dtcltiny
+unterstützt Standardnachrichten (Generic Messages, GM), die mit der
+Version 0.8.4 in SRCP eingeführt wurden. Diese Erweiterung ermöglicht
+SRCP-Clients miteinander Daten auszutauschen, die nicht im Sprachumfang
+von SRCP enthalten sind.
+.I dtcltiny
+nutzt CRCF (Common Railroad Configuration Files), um erweiterte
+Fahrstraßendaten zu kapseln und diese als CRCF-Client von einem
+CRCF-Server, wie z.B.
+.I spdrs60
+zu erfragen.
+.\"
+.\"
+.SH OPTIONEN
+Bislang bietet
+.I dtcltiny
+keine speziellen Kommandozeilenoptionen, es unterstützt jedoch die
+generischen Optionen der zugrundeliegenden Qt-Bibliothek.
+.TP
+.BI \-geometry \ WxH+X+Y
+Legt die Größe und und die Position des Programmfensters fest.  Diese
+Option mag sinnvoll sein, um eine größere Sammlung an
+Lokomotiv-Controllern anzuzeigen.
+.\"
+.\"
+.SH DATEIEN
+.TP 
+.I ~/.dtcltinyrc
+Persönliche Einstellungen des Benutzers. Die dort gespeicherten Daten
+können über das Menü 
+.I Optionen Einstellungen
+im laufenden Programm geändert werden.
+.\"
+.\"
+.SH KONFORM ZU
+Diese Version 
+.I dtcltiny
+ist konform zu SRCP 0.8.4.
+.\"
+.\"
+.SH FEHLER
+Möglicherweise gibt es den einen oder anderen Fehler im Programm.  Bitte
+senden sie Fehlerberichte oder Vorschläge für Verbesserungen an die 
+.I dctltiny
+Benutzer Mailingliste <dtcltiny-user@lists.sourceforge.net>.
+.\"
+.\"
+.SH BEISPIEL
+.TP
+.BI dtcltiny
+Zeigt das Programmfenster ohne konfigurierte Lok-Steuerungen an. Das
+automatische Laden einer voreigestellten Datei kann über den
+Dialog für die Benutzereinstellungen festgelegt werden.
+.TP
+.BI dtcltiny\ \-geometry\ 800x600+0+0
+Zeigt das Programmfenster in einer Größe von 800x600 Pixeln und
+positioniert es in der linken oberen Ecke des Bildschirms.
+.\"
+.\"
+.SH AUTOREN
+.B dtcltiny
+wurde von Markus Pfeiffer <mail@markus-pfeiffer.de> geschrieben. Größere
+Weiterentwicklungen, wie die Portierung auf neuere Qt-Bibliotheken,
+Übersetzungen, Anpassungen an SRCP 0.8,  etc. wurden von Guido Scholz
+<guido-scholz@gmx.net> durchgeführt.
+.PP
+Diese Handbuchseite wurde von Guido Scholz erstellt.
+.\"
+.\"
+.SH "SIEHE AUCH"
+.BR spdrs60 (1),
+.BR srcpd (8)

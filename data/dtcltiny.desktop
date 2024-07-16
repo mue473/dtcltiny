@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=DtclTiny
+GenericName=Digital Model Train Controller
+GenericName[de]=Digitale Modellzugsteuerung
+Type=Application
+Icon=/usr/local/share/dtcltiny/dtcltiny.ico
+Exec=dtcltiny
+Terminal=0
+Categories=Game;Simulation;

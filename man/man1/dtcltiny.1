@@ -1,0 +1,119 @@
+'\" t
+.\" ** The above line should force tbl to be a preprocessor **
+.\"
+.\" Manual page for dtcltiny
+.\" process with:
+.\"   groff -man -Tlatin1 dtcltiny.1 | less
+.\"or
+.\"   groff -man -Tutf8 dtcltiny.1 | less
+.\"
+.\" Copyright (C) 2008 Guido Scholz
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the file COPYING that comes with the
+.\" dtcltiny distribution.
+.\"
+.\" Thu Dec 30 17:10:00 CEST 2008  Guido Scholz <guido-scholz@gmx.net>
+.\"
+.TH DTCLTINY 1 2016-03-13 Linux "SRCP Clients"
+.SH NAME
+dtcltiny \- SRCP based digital model train controller.
+.\"
+.\"
+.SH SYNOPSIS
+.B dtcltiny
+[
+.I -options
+] [
+.I file
+]
+.\"
+.\"
+.SH DESCRIPTION
+.I dtcltiny
+is a graphical Simple Railroad Command Protocol (SRCP) client to
+comfortably control a digital model trains.  His look has been adopted
+from
+.I dtcl
+(Digital Train control) by Stefan Preis.  This program is designed to be
+used with a SRCP server as provided by the DDL project.
+.PP
+.I dtcltiny
+can be used to access a local SRCP server, or to connect over a host
+to host TCP/IP network.  For historical reasons there have been several
+partly incompatible versions of SRCP.  This version of
+.I dtcltiny
+only supports SRCP version 0.8.4 and hence needs a suitable SRCP server
+like
+.I srcpd
+(http://srcpd.sourceforge.net/). For basic usage of
+.I dtcltiny
+it may be sufficent to connect to servers providing older SRCP
+standards ranging from 0.8.0 to 0.8.3.
+.SS "Generic Messages"
+.I dtcltiny
+supports Generic Messages (GM) which were introduced to SRCP in version
+0.8.4. This feature is used to transport CRCF (Common Railroad
+Configuration Files) data enabling SRCP clients to exchange information
+not part of the SRCP specification.
+.I dtcltiny
+acts as CRCF client and can communicate with CRCF clients like
+.I spdrs60
+to request route specific information.
+.\"
+.\"
+.SH OPTIONS
+For now
+.B dtcltiny
+does not implement special command-line options, but supports 
+generic options of the underlying Qt-library.
+.TP
+.BI \-geometry \ WxH+X+Y
+Sets the size and location of the main window.  This may be specially
+useful for displaying a full set of train controllers.
+.\"
+.\"
+.SH FILES
+.TP 
+.I ~/.dtcltinyrc
+Personal dtcltiny defaults (see
+.I Options Preferences
+menu).
+.\"
+.\"
+.SH CONFORMING TO
+This version of
+.I dtcltiny
+is conforming to SRCP 0.8.4.
+.\"
+.\"
+.SH BUGS
+May be there are some bugs, worth to be smashed.  Please send bug reports
+or suggestions to the
+.I dctltiny
+user mailinglist <dtcltiny-user@lists.sourceforge.net>.
+.\"
+.\"
+.SH EXAMPLE
+.TP
+.BI dtcltiny
+Display the main window with an empty controller set.  Pre-loading of a
+user specific locomotive controller set file can be configured with the
+preferences dialog.
+.TP
+.BI dtcltiny\ \-geometry\ 800x600+0+0
+Display the man window in 800x600 pixel size and place it to the upper
+left corner.
+.\"
+.\"
+.SH AUTHORS
+.B dtcltiny
+was written by Markus Pfeiffer <mail@markus-pfeiffer.de>
+and Guido Scholz <guido-scholz@gmx.net>.
+.PP
+This manual page was written by Guido Scholz.
+.\"
+.\"
+.SH "SEE ALSO"
+.BR spdrs60 (1),
+.BR srcpd (8)

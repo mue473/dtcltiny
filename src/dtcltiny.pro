@@ -1,9 +1,9 @@
-# dtcltiny.pro - adapted for raidtcl project 2018 - 2021 by Rainer Müller 
+# dtcltiny.pro - adapted for raidtcl project 2018 - 2024 by Rainer MÃ¼ller 
 
 CONFIG += qt lrelease
 TEMPLATE = app
 TARGET = dtcltiny
-QT +=  widgets network
+QT += widgets network
 PRE_TARGETDEPS += pretarget
 QMAKE_EXTRA_TARGETS += timestamp
 
@@ -27,27 +27,27 @@ HEADERS = config.h \
         srcpmessage.h \
         srcpmessagefactory.h \
         srcpport.h \
-		../icons/dtcltiny_32.xpm
-	
+        ../icons/dtcltiny_32.xpm
+
 SOURCES = main.cpp \
         aboutdialog.cpp \
         commandport.cpp \
-	    crcfmessage.cpp \
+        crcfmessage.cpp \
         hiddencontrollersdialog.cpp \
-	    infoport.cpp \
-	    listpropertiesdialog.cpp \
-	    lococontrol.cpp \
-	    locodialog.cpp \
-	    mainwindow.cpp \
-	    messagehistory.cpp \
-	    preferencesdlg.cpp \
+        infoport.cpp \
+        listpropertiesdialog.cpp \
+        lococontrol.cpp \
+        locodialog.cpp \
+        mainwindow.cpp \
+        messagehistory.cpp \
+        preferencesdlg.cpp \
         programmer.cpp \
         routesviewoptionsdialog.cpp \
         routeswindow.cpp \
-	    serverinfodialog.cpp \
-    	srcpmessage.cpp \
+        serverinfodialog.cpp \
+        srcpmessage.cpp \
         srcpmessagefactory.cpp \
-	    srcpport.cpp \
+        srcpport.cpp \
         funcsymb.cpp
 
 TRANSLATIONS = \
@@ -65,25 +65,31 @@ win32 {
         DESTDIR = $$OBJECTS_DIR
         LRELEASE_DIR = ../x64
     }
-	RC_ICONS = ../icons/dtcltiny.ico
-	QMAKE_TARGET_COPYRIGHT = 2018 - 2021 © R.Müller
+    RC_ICONS = ../icons/dtcltiny.ico
+    QMAKE_TARGET_COPYRIGHT = 2018 - 2024 Â© R.MÃ¼ller
 }
 # target platform dependent for Linux
 else {
-	LRELEASE_DIR = .
-	QMAKE_LFLAGS += -no-pie
+    LRELEASE_DIR = .
+    QMAKE_LFLAGS += -no-pie
 
-	resources.path = /usr/local/share/dtcltiny
-	resources.files = ../data/*
-	resources.extra = find $$resources.files -type f -exec chmod 644 '{}' \; 
+    resources.path = /usr/local/share/dtcltiny
+    resources.files = ../data/*
+    resources.extra = find $$resources.files -type f -exec chmod 644 '{}' \;
 
-	translations.path = /usr/local/share/dtcltiny/translations
-	translations.files = *.qm
+    icon.path = /usr/local/share/dtcltiny
+    icon.files = ../icons/dtcltiny.ico
 
-	documentation.path = /usr/local/share/doc/dtcltiny
-	documentation.files = ../doc/*
-	documentation.extra = find $$documentation.files -type f -exec chmod 644 '{}' \; 
+    translations.path = /usr/local/share/dtcltiny/translations
+    translations.commands = cp *.qm $$translations.path
 
-	target.path = /usr/local/bin
-	INSTALLS += documentation translations resources target
+    documentation.path = /usr/local/share/doc/dtcltiny
+    documentation.files = ../doc/*
+    documentation.extra = find $$documentation.files -type f -exec chmod 644 '{}' \; 
+
+	manpage.path = /usr/local/share/man
+	manpage.files = ../man/*
+
+    target.path = /usr/local/bin
+    INSTALLS += documentation manpage translations resources icon target
 }
