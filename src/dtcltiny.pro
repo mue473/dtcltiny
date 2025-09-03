@@ -1,4 +1,4 @@
-# dtcltiny.pro - adapted for raidtcl project 2018 - 2024 by Rainer Müller 
+# dtcltiny.pro - adapted for raidtcl project 2018 - 2025 by Rainer Müller
 
 CONFIG += qt lrelease
 TEMPLATE = app
@@ -66,7 +66,7 @@ win32 {
         LRELEASE_DIR = ../x64
     }
     RC_ICONS = ../icons/dtcltiny.ico
-    QMAKE_TARGET_COPYRIGHT = 2018 - 2024 © R.Müller
+    QMAKE_TARGET_COPYRIGHT = 2018 - 2025 © R.Müller
 }
 # target platform dependent for Linux
 else {
@@ -76,6 +76,9 @@ else {
     resources.path = /usr/local/share/dtcltiny
     resources.files = ../data/*
     resources.extra = find $$resources.files -type f -exec chmod 644 '{}' \;
+
+    desktop.path = /usr/share/applications
+    desktop.files = ../data/dtcltiny.desktop
 
     icon.path = /usr/local/share/dtcltiny
     icon.files = ../icons/dtcltiny.ico
@@ -87,9 +90,9 @@ else {
     documentation.files = ../doc/*
     documentation.extra = find $$documentation.files -type f -exec chmod 644 '{}' \; 
 
-	manpage.path = /usr/local/share/man
-	manpage.files = ../man/*
+    manpage.path = /usr/local/share/man
+    manpage.files = ../man/*
 
     target.path = /usr/local/bin
-    INSTALLS += documentation manpage translations resources icon target
+    INSTALLS += documentation manpage translations resources desktop icon target
 }
