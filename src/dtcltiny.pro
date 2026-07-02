@@ -1,4 +1,4 @@
-# dtcltiny.pro - adapted for raidtcl project 2018 - 2025 by Rainer Müller
+# dtcltiny.pro - adapted for raidtcl project 2018 - 2026 by Rainer Müller
 
 CONFIG += qt lrelease
 TEMPLATE = app
@@ -27,6 +27,7 @@ HEADERS = config.h \
         srcpmessage.h \
         srcpmessagefactory.h \
         srcpport.h \
+        timestamp.h \
         ../icons/dtcltiny_32.xpm
 
 SOURCES = main.cpp \

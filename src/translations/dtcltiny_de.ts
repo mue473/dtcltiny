@@ -25,10 +25,6 @@ dtcltiny basiert auf &quot;DigitalTrainControl for Linux&quot; von Stefan Preis.
 <context>
     <name>HiddenControllersDialog</name>
     <message>
-        <source>Show hidden controllers</source>
-        <translation type="vanished">Versteckte Controller anzeigen</translation>
-    </message>
-    <message>
         <source>&amp;Show</source>
         <translation>&amp;Anzeigen</translation>
     </message>
@@ -354,10 +350,6 @@ a correct value from 1 to %1.</source>
 Bitte korrekten Wert zwischen 1 und %1 eingeben.</translation>
     </message>
     <message>
-        <source>&amp;Visible</source>
-        <translation type="vanished">&amp;Sichtbar</translation>
-    </message>
-    <message>
         <source>&amp;Type:</source>
         <translation>&amp;Typ:</translation>
     </message>
@@ -376,42 +368,6 @@ Bitte korrekten Wert zwischen 1 und %1 eingeben.</translation>
     <message>
         <source>Maximum &amp;value complies speed value</source>
         <translation>Maxim&amp;um entspricht Geschwindigkeit</translation>
-    </message>
-    <message>
-        <source>Light</source>
-        <translation type="vanished">Licht</translation>
-    </message>
-    <message>
-        <source>Smoke</source>
-        <translation type="vanished">Rauch</translation>
-    </message>
-    <message>
-        <source>Coupling</source>
-        <translation type="vanished">Kupplung</translation>
-    </message>
-    <message>
-        <source>Sound</source>
-        <translation type="vanished">Klang</translation>
-    </message>
-    <message>
-        <source>Shunting</source>
-        <translation type="vanished">Rangieren</translation>
-    </message>
-    <message>
-        <source>Cabinlight</source>
-        <translation type="vanished">Kabinenbeleuchtung</translation>
-    </message>
-    <message>
-        <source>Wagonlight</source>
-        <translation type="vanished">Innenbeleuchtung</translation>
-    </message>
-    <message>
-        <source>Gearlight</source>
-        <translation type="vanished">Fahrwerksbeleuchtung</translation>
-    </message>
-    <message>
-        <source>Whistle</source>
-        <translation type="vanished">Pfeifen</translation>
     </message>
     <message>
         <source>Decoder &quot;%1&quot; not recognized.
@@ -1009,14 +965,6 @@ does not exist. Please adjust your options.</source>
 existiert nicht. Bitte korrigieren Sie die Einstellungen.</translation>
     </message>
     <message>
-        <source>&amp;Now</source>
-        <translation>&amp;Jetzt</translation>
-    </message>
-    <message>
-        <source>&amp;Later</source>
-        <translation>&amp;Später</translation>
-    </message>
-    <message>
         <source>&amp;Open...</source>
         <translation>&amp;Öffnen...</translation>
     </message>
@@ -1291,16 +1239,8 @@ Sind sie sicher?</translation>
         <translation>&amp;Wählen...</translation>
     </message>
     <message>
-        <source>&amp;Browser for online help</source>
-        <translation type="vanished">&amp;Browser für Online-Hilfe</translation>
-    </message>
-    <message>
         <source>Choose file</source>
         <translation>Datei wählen</translation>
-    </message>
-    <message>
-        <source>Locomotive controller sets</source>
-        <translation type="vanished">Lokomotiv-Controller Sätze</translation>
     </message>
     <message>
         <source>&amp;Rail transport modelling scale</source>
@@ -1324,10 +1264,6 @@ Sind sie sicher?</translation>
     <message>
         <source>Programmer for Uhlenbrock-Decoders</source>
         <translation>Programmierer für Uhlenbrock-Decoder</translation>
-    </message>
-    <message>
-        <source>&amp;Address:</source>
-        <translation>&amp;Adresse:</translation>
     </message>
     <message>
         <source>&amp;Register #:</source>
@@ -1362,6 +1298,14 @@ Sind sie sicher?</translation>
         <translation>Ein &amp;Register setzen</translation>
     </message>
     <message>
+        <source>&amp;Address (if POM):</source>
+        <translation>&amp;Adresse (bei POM):</translation>
+    </message>
+    <message>
+        <source>empty for programming track usage</source>
+        <translation>für Programmiergleisnutzung leer lassen</translation>
+    </message>
+    <message>
         <source>Bi&amp;t #:</source>
         <translation>&amp;Bit Nr.:</translation>
     </message>
@@ -1372,6 +1316,10 @@ Sind sie sicher?</translation>
     <message>
         <source>&amp;Program</source>
         <translation>&amp;Programmieren</translation>
+    </message>
+    <message>
+        <source>Parameters out of range</source>
+        <translation>Parameter außer Bereich</translation>
     </message>
     <message>
         <source>Set decoder to &amp;NMRA only</source>

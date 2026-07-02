@@ -1,3 +1,5 @@
+// programmer.cpp - adapted for raidtcl project 2026 by Rainer Müller
+
 /***************************************************************************
                                programmer.cpp
                              -------------------
@@ -27,6 +29,11 @@
 
 #include "programmer.h"
 
+#if QT_VERSION >= QT_VERSION_CHECK(5,15,0)
+    #define CLICKED  SIGNAL(idClicked(int))
+#else
+    #define CLICKED  SIGNAL(buttonClicked(int))
+#endif
 
 class SleeperThread : public QThread
 {
@@ -92,8 +99,7 @@ Programmer::Programmer(QWidget* parent, int type, bool started,
     choiceLayout->addWidget(rbNMRA_Set);
     actionGroup->addButton(rbNMRA_Set, progNmra);
 
-    connect(actionGroup, SIGNAL(buttonClicked(int)), this,
-            SLOT(slotSetupChoice(int)));
+    connect(actionGroup, CLICKED, this, SLOT(slotSetupChoice(int)));
 
 
     // parameter group box
@@ -105,10 +111,11 @@ Programmer::Programmer(QWidget* parent, int type, bool started,
 
     // 4 line with Address
     QHBoxLayout* addressLayout = new QHBoxLayout();
-    labelAddress = new QLabel(tr("&Address:"), paramGroup);
+    labelAddress = new QLabel(tr("&Address (if POM):"), paramGroup);
 
     leAddress = new QLineEdit(paramGroup);
     leAddress->setMaxLength(3);
+    leAddress->setToolTip(tr("empty for programming track usage"));
     labelAddress->setBuddy(leAddress);
 
     addressLayout->addWidget(labelAddress);
@@ -191,13 +198,15 @@ Programmer::Programmer(QWidget* parent, int type, bool started,
 // sets up the right window half in respect to the left one
 void Programmer::slotSetupChoice(int button)
 {
+    labelAddress->setEnabled(button < 2);
+    leAddress->setEnabled(button < 2);
     labelValue->setEnabled(button != 3);
     leValue->setEnabled(button != 3);
 
     leCV_Reg->clear();
     leValue->clear();
     leBit->clear();
-    //leAddress->clear();
+    if (button > 1) leAddress->clear();
 
     switch (button) {
         // CV set
@@ -249,19 +258,13 @@ void Programmer::slotProgramNMRA()
     int Bit = leBit->text().toInt();
     unsigned int address = leAddress->text().toUInt();
 
-    PowerMessage pm = PowerMessage(SrcpMessage::mtPowerSet,
-            srcpbus, false);
-    // stop refresh cycle
-    if (bStarted) {
-        emit sendSrcpMessage(pm);
-        qApp->processEvents();
-    }
-  
+//  Power Handling has to be done on server side depending on prog method
     SmMessage smm = SmMessage(SrcpMessage::mtSmInit, srcpbus,
             SmMessage::smpNmra);
     emit sendSrcpMessage(smm);
     qApp->processEvents();
 
+    if (CV_Reg < 1 || CV_Reg > 1024) goto parmfail;
     switch (actionGroup->checkedId()) {
         case progCv:
             //("GL NMRA CV %d %d", CV_Reg, Value);
@@ -271,6 +274,7 @@ void Programmer::slotProgramNMRA()
 
         case progCvBit:
         case progNmra:
+            if (Bit > 7 || Value > 1) goto parmfail;
             //("GL NMRA CVBIT %d %d %d", CV_Reg, Bit, Value);
             smm = SmMessage(SrcpMessage::mtSmSet, srcpbus, address,
                     SmMessage::smtCvbit, CV_Reg, Bit, Value);
@@ -286,15 +290,14 @@ void Programmer::slotProgramNMRA()
     emit sendSrcpMessage(smm);
     qApp->processEvents();
 
-    if (bStarted) {
-        pm = PowerMessage(SrcpMessage::mtPowerSet, srcpbus, true);
-        emit sendSrcpMessage(pm);
-        qApp->processEvents();
-    }
-
     QMessageBox::information(this, "dtcltiny",
                              tr("Programming completed"));
     //accept();
+    return;
+
+parmfail:
+    QMessageBox::warning(this, "dtcltiny",
+                             tr("Parameters out of range"));
 }
 
 // Uhlenbrock dependent programming code
