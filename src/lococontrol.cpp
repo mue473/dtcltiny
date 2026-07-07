@@ -1,4 +1,4 @@
-// lococontrol.cpp - adapted for raidtcl project 2018 - 2023 by Rainer Müller
+// lococontrol.cpp - adapted for raidtcl project 2018 - 2026 by Rainer Müller
 
 /***************************************************************************
                                lococontrol.cpp
@@ -853,7 +853,6 @@ void LocoControl::sendLocoState()
 }
 
 
-
 void LocoControl::updateSpeedButtonText()
 {
     QString speedText;
@@ -873,14 +872,21 @@ void LocoControl::updateSpeedButtonText()
 
 void LocoControl::runPropertiesDialog()
 {
-    // stop current speed change action
-    delayTimer->stop();
-    if (haltTimer->isActive())
-        haltTimer->stop();
+	// storage for values to detect changes
+    unsigned int newaddress;
+    QString sprot = locoProtocol;
+    unsigned int sfs = functions.size();
 
-    // stop locomotive
-    speedSlider->setValue(0);
-    slotUpdateSpeed(0);
+    if (initialized()) {
+        // stop current speed change action
+        delayTimer->stop();
+        if (haltTimer->isActive())
+            haltTimer->stop();
+
+        // stop locomotive
+        speedSlider->setValue(0);
+        slotUpdateSpeed(0);
+    }
 
     LocoDialog *dlg = new LocoDialog(this);
 
@@ -909,7 +915,7 @@ void LocoControl::runPropertiesDialog()
         locoPicture = dlg->getLocoPixmapName();
         reverseDirection = dlg->getReverseDirection();
         dlg->getDecoder(locoDecoder, locoProtocol);
-        address = dlg->getAddress();
+        newaddress = dlg->getAddress();
         dlg->getAttenuationTimes(iLocoAccelTime, iLocoBreakTime);
         dlg->getLocoSpeeds(maxSpeedStep, avgSpeedStep, minSpeedStep,
                 maximumSpeed);
@@ -922,9 +928,14 @@ void LocoControl::runPropertiesDialog()
         followlimit = dlg->getFollowLimit();
 
         modified = true;
-
         updateLocoName();
-
+        if ((newaddress != address) || (sprot != locoProtocol) ||
+                                        (sfs != functions.size())) {
+            if (initialized())
+                terminate();
+            address = newaddress;
+            initialize();
+        }
         if (!locoPicture.isEmpty()) {
             bool found = locoPixmap.load(QString(LOCO_PIX_DIR) + locoPicture);
             if (!found)
@@ -2186,6 +2197,15 @@ void LocoControl::reinitialize()
     srcpstate &= ~initDone;
     lockAction->setEnabled(false);
 }
+
+
+//send controller term to server
+void LocoControl::terminate()
+{
+    GlMessage glm = GlMessage(SrcpMessage::mtGlTerm, srcpbus, address);
+    emit sendSrcpMessage(glm);
+}
+
 
 //Toggle SRCP lock state for this controller; if is locked show lock icon
 

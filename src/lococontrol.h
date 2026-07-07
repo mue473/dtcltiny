@@ -1,4 +1,4 @@
-// lococontrol.h - adapted for raidtcl project 2018 - 2021 by Rainer Müller
+// lococontrol.h - adapted for raidtcl project 2018 - 2026 by Rainer Müller
 
 /***************************************************************************
                                LocoControl.h
@@ -156,13 +156,11 @@ class LocoControl : public QFrame
     void handleFuncKeyRelease(int);
     void initLayout();
     void readFileTextFromStream(QTextStream&);
-//    void sendLocoState();
     void setDefaultValues();
     void updateDirection();
     void updateDisplay();
     void updateSpeedButtonText();
     void setFuButton(QAbstractButton*, int, bool);
-//    int getFunctionTypeId(const QString&);
     int getSrcpGlProtocol(const QString&, GlMessage::Protocol&, unsigned int&);
     void updateFunctionStates(unsigned int);
     void changeFunctionState(int);
@@ -216,6 +214,7 @@ public:
     void reinitialize();
     void initialize();
     void setInitialized();
+    void terminate();
     bool initialized();
     bool emergencyHalted();
 

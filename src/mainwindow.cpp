@@ -1,4 +1,4 @@
-// mainwindow.cpp - adapted for raidtcl project 2018 - 2023 by Rainer Müller
+// mainwindow.cpp - adapted for raidtcl project 2018 - 2026 by Rainer Müller
 
 /***************************************************************************
                                MainWindow.cpp
@@ -1428,6 +1428,7 @@ void MainWindow::slotLocomotiveRemove(int cid)
     for (int i = 0; i < controllers.size(); ++i) {
         if (controllers.at(i)->hasId(cid)){
             LocoControl* lc = controllers.takeAt(i);
+            lc->terminate();
             lc->deleteLater();
             modified = true;
         }
