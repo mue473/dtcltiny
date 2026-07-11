@@ -1,4 +1,4 @@
-// mainwindow.h - adapted for raidtcl project 2018 - 2020 by Rainer Müller
+// mainwindow.h - adapted for raidtcl project 2018 - 2026 by Rainer Müller
 
 /***************************************************************************
                                MainWindow.h
@@ -167,6 +167,7 @@ signals:
     void statusMessage(const QString&);
     void srcpBusChanged(unsigned int);
     void scaleChanged(int);
+    void progResult(int);
 };
 
 #endif  //MAINWINDOW_H

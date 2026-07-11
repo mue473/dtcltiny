@@ -1,4 +1,4 @@
-// srcpmessage.h - adapted for raidtcl project 2018 by Rainer Müller 
+// srcpmessage.h - adapted for raidtcl project 2018 - 2026 by Rainer Müller 
 
 /***************************************************************************
  srcpmessage.h
@@ -66,7 +66,7 @@ class SrcpMessage
         enum Code {code0 = 0,
             code100 = 100, code101, code102, code103,
             code200 = 200, code201, code202,
-            code410 = 410, code411, code412,
+            code410 = 410, code411, code412, code413,
             code414 = 414, code415, code416, code417, code418, code419,
             code420, code421, code422, code423, code424, code425,
             code499 = 499

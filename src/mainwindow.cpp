@@ -947,6 +947,9 @@ void MainWindow::processCommandMessage(const SrcpMessage* sm)
                 emit statusMessage(tr("Emergency stop done"));
                 state = csNormal;
             }
+            else if (csNormal == state) {
+                emit progResult(sm->getCode());
+            }
             break;
         default:
             break;
@@ -1369,6 +1372,7 @@ void MainWindow::slotProgramNMRA()
     Programmer *dp = new Programmer(this, NMRA, powerOn, srcpBus);
     connect(dp, SIGNAL(sendSrcpMessage(const SrcpMessage&)),
             this, SLOT(sendSrcpMessage(const SrcpMessage&)));
+    connect(this, SIGNAL(progResult(int)), dp, SLOT(slotProgResult(int)));
 
     dp->exec();
     delete dp;

@@ -1,3 +1,5 @@
+// programmer.h - adapted for raidtcl project 2026 by Rainer Müller
+
 /***************************************************************************
                                Programmer.h
                              -----------------
@@ -34,6 +36,7 @@ class Programmer: public QDialog {
   Q_OBJECT
 
     int iType;
+    int nrmsgs;
     bool bStarted;
     unsigned int srcpbus;
 
@@ -50,6 +53,9 @@ class Programmer: public QDialog {
 
 public:
     Programmer(QWidget* parent, int type, bool started, unsigned int bus);
+
+public slots:
+    void slotProgResult(int);
 
 private slots:
     void slotProgramNMRA();

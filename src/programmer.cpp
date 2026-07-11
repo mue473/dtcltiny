@@ -259,6 +259,7 @@ void Programmer::slotProgramNMRA()
     unsigned int address = leAddress->text().toUInt();
 
 //  Power Handling has to be done on server side depending on prog method
+    nrmsgs = 2;
     SmMessage smm = SmMessage(SrcpMessage::mtSmInit, srcpbus,
             SmMessage::smpNmra);
     emit sendSrcpMessage(smm);
@@ -289,10 +290,6 @@ void Programmer::slotProgramNMRA()
 
     emit sendSrcpMessage(smm);
     qApp->processEvents();
-
-    QMessageBox::information(this, "dtcltiny",
-                             tr("Programming completed"));
-    //accept();
     return;
 
 parmfail:
@@ -448,3 +445,18 @@ void Programmer::slotProgramUHL()
                              tr("Programming completed"));
     //accept();
 }
+
+void Programmer::slotProgResult(int code)
+{
+    if (--nrmsgs != 0) return;
+    if (code == SrcpMessage::code200)
+        QMessageBox::information(this, "dtcltiny",
+                             tr("Programming completed."));
+    else if (code == SrcpMessage::code413)
+        QMessageBox::warning(this, "dtcltiny",
+                             tr("Programming temporarily prohibited."));
+    else
+        QMessageBox::warning(this, "dtcltiny",
+                             tr("Programming failed with code %1.").arg(code));
+}
+

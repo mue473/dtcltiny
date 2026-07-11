@@ -1325,6 +1325,18 @@ Sind sie sicher?</translation>
         <source>Set decoder to &amp;NMRA only</source>
         <translation>Decoder auf nur &amp;NMRA setzen</translation>
     </message>
+    <message>
+        <source>Programming completed.</source>
+        <translation>Programmierung durchgeführt.</translation>
+    </message>
+    <message>
+        <source>Programming temporarily prohibited.</source>
+        <translation>Programmierung vorübergehend nicht möglich.</translation>
+    </message>
+    <message>
+        <source>Programming failed with code %1.</source>
+        <translation>Programmierung mit Code %1 fehlgeschlagen.</translation>
+    </message>
 </context>
 <context>
     <name>RoutesViewOptionsDialog</name>
